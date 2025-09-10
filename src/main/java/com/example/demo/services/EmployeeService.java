@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.Exception.InvalidAgeException;
+import com.example.demo.Exception.InvalidSalaryException;
 import com.example.demo.empty.Employee;
 import com.example.demo.Exception.IllegalEmployeeException;
 import com.example.demo.repository.EmployeeRepository;
@@ -32,10 +34,10 @@ public class EmployeeService {
             throw new IllegalEmployeeException("Employee age cannot be null");
         }
         if (employee.getAge() < 18 || employee.getAge() > 45) {
-            throw new IllegalEmployeeException("Employee age must be between 18 and 45");
+            throw new InvalidAgeException("Employee age must be between 18 and 45");
         }
         if(employee.getAge()>30 && employee.getSalary()<200000){
-            throw new IllegalEmployeeException("Employee older than 30 cannot have salary less than 200000");
+            throw new InvalidSalaryException("Employee salary must be greater than 200000 if age is greater than 30");
         }
 
         return employeeRepository.createEmployee(employee);
