@@ -1,15 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.Employee;
+import com.example.demo.empty.Employee;
 import com.example.demo.services.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/employees")

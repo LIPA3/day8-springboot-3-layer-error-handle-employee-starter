@@ -1,11 +1,8 @@
 package com.example.demo.repository;
 
-import com.example.demo.Employee;
+import com.example.demo.empty.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;

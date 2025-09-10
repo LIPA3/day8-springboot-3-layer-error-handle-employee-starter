@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.Exception.IllegalEmployeeException;
+import com.example.demo.empty.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.services.EmployeeService;
 import org.junit.jupiter.api.Test;
