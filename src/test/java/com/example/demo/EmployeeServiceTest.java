@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.Exception.IllegalEmployeeException;
+import com.example.demo.Exception.InvalidAgeException;
 import com.example.demo.empty.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.services.EmployeeService;
@@ -35,14 +36,14 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_exception_when_create_employee_of_greater_than_200000_or_less_than_0() {
         Employee employee = new Employee("John Doe", 16, "MALE", 250000.0);
-        assertThrows(IllegalEmployeeException.class, () -> {
+        assertThrows(InvalidAgeException.class, () -> {
             employeeService.createEmployee(employee);
         });
     }
 
     @Test
     void should_throw_exception_when_create_employee_of_null_age() {
-        Employee employee = new Employee("John Doe", 32, "MALE", 20000.0);
+        Employee employee = new Employee("John Doe", null, "MALE", 20000.0);
         assertThrows(IllegalEmployeeException.class, () -> {
             employeeService.createEmployee(employee);
         });
