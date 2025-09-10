@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.services.EmployeeService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,7 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
+    @Autowired
+    private EmployeeService employeeService;
 //    @Autowired
 //    private EmployeeController employeeController;
 //
@@ -187,5 +190,22 @@ public class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5));
+    }
+    @Test
+    void should_return_status_true_when_create_employee(){
+            Employee employee = new Employee("John Doe", 20, "MALE", 50000.0, true);
+            Employee created = employeeService.createEmployee(employee);
+            assertTrue(created.getActive());
+            assertNotNull(created.getId());
+
+    }
+    @Test
+    void should_return_status_false_when_delete_employee() {
+        Employee employee = new Employee("Jane Doe", 25, "FEMALE", 60000.0, true);
+        Employee created = employeeService.createEmployee(employee);
+
+        employeeService.deleteEmployee(created.getId());
+        Employee afterDelete = employeeService.getEmployeeById(created.getId());
+        assertFalse(afterDelete.getActive());
     }
 }

@@ -43,6 +43,9 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(int id, Employee updatedEmployee) {
+        if(updatedEmployee.getActive() == false){
+            throw new IllegalEmployeeException("He/She is already left");
+        }
         return employeeRepository.updateEmployee(id, updatedEmployee);
     }
 
@@ -52,8 +55,8 @@ public class EmployeeService {
         if (employeeById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
-
-        employeeRepository.deleteEmployee(employeeById);
+        employeeById.setActive(false);
+        employeeRepository.updateEmployee(id,employeeById);
     }
 
     public void empty() {

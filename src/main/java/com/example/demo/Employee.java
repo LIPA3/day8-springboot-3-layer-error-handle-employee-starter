@@ -1,19 +1,12 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Employee {
     private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Double salary;
-    private Boolean status;
+    private Boolean active;
     public Integer getId() {
         return id;
     }
@@ -27,24 +20,24 @@ public class Employee {
         return gender;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Double getSalary() {
         return salary;
     }
 
-    public Employee(String name, Integer age, String gender, Double salary, Boolean status) {
+    public Employee(String name, Integer age, String gender, Double salary, Boolean active) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.status = status;
+        this.active = active;
     }
 
     public Employee(String name, Integer age, String gender, Double salary) {

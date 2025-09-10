@@ -50,6 +50,9 @@ public class EmployeeRepository {
         if (found == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
+//        if(found.getActive() == false){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "He/She is already left");
+//        }
         found.setName(updatedEmployee.getName());
         found.setAge(updatedEmployee.getAge());
         found.setGender(updatedEmployee.getGender());
@@ -58,7 +61,6 @@ public class EmployeeRepository {
     }
 
     public void deleteEmployee(Employee employee) {
-
         employees.remove(employee);
     }
     public void empty() {
