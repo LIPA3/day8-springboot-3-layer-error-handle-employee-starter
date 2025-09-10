@@ -28,6 +28,14 @@ public class Employee {
     public Double getSalary() {
         return salary;
     }
+
+    public Employee(String name, Integer age, String gender, Double salary) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
