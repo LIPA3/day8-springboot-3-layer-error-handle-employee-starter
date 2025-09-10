@@ -47,20 +47,10 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEmployee(@PathVariable int id) {
-        Employee found = null;
-        for (Employee e : employees) {
-            if (e.getId() == id) {
-                found = e;
-                break;
-            }
-        }
-        if (found == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
-        }
-        employees.remove(found);
+        employeeService.deleteEmployee(id);
     }
 @DeleteMapping("/all")
     public void empty() {
-        employees.clear();
+        employeeService.empty();
     }
 }

@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,7 +16,7 @@ import java.util.stream.Stream;
 @Repository
 public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
-    public List<Employee> getEmployees(@RequestParam(required = false) String gender, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public List<Employee> getEmployees(String gender, Integer page, Integer size) {
         Stream<Employee> stream = employees.stream();
         if (gender != null) {
             stream = stream.filter(employee -> employee.getGender().compareToIgnoreCase(gender) == 0);
@@ -27,11 +28,10 @@ public class EmployeeRepository {
     }
 
     public Employee getEmployeeById(int id) {
-        Employee employee1 = employees.stream()
+        return employees.stream()
                 .filter(employee -> employee.getId() == id)
                 .findFirst()
-                .orElseThrow(null);
-        return employee1;
+                .orElse(null);
     }
     public Employee createEmployee(Employee employee) {
         employee.setId(employees.size() + 1);
@@ -55,5 +55,13 @@ public class EmployeeRepository {
         found.setGender(updatedEmployee.getGender());
         found.setSalary(updatedEmployee.getSalary());
         return found;
+    }
+
+    public void deleteEmployee(Employee employee) {
+
+        employees.remove(employee);
+    }
+    public void empty() {
+        employees.clear();
     }
 }
