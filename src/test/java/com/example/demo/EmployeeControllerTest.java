@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.controller.EmployeeController;
 import com.example.demo.empty.Employee;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,15 +20,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
+    @Autowired
+    private EmployeeController employeeController;
     private void createJohnSmith() throws Exception {
-        String john = genEmployeeJsonString(null, "John Smith", 28, "MALE", 60000.0);
+        Gson gson = new Gson();
+        String john = gson.toJson(new Employee(null, "John Smith", 28, "MALE", 60000.0)).toString();
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(john));
     }
 
     private void createJaneDoe() throws Exception {
         Gson gson = new Gson();
-        String jane = genEmployeeJsonString(null, "Jane Doe", 22, "FEMALE", 60000.0);
+        String jane = gson.toJson(new Employee(null, "Jane Doe", 22, "FEMALE", 60000.0));
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(jane));
     }
 
@@ -217,5 +220,23 @@ public class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(employee))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void should_throw_exception_when_create_employee_of_greater_than_65_or_less_than_18() throws Exception {
+        Gson gson = new Gson();
+        String john = gson.toJson(new Employee("John Smith",  66, "Male", 60000.0));
+        mockMvc.perform(post("/employees")
+                        .contentType(MediaType.APPLICATION_JSON).content(john))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void should_throw_exception_when_update_employee_is_inactive() throws Exception {
+        Gson gson = new Gson();
+        String updateInfo = gson.toJson(new Employee("Tom", 28, "Male", 7000.0, false));
+        mockMvc.perform(put("/employees/1")
+                        .contentType(MediaType.APPLICATION_JSON).content(updateInfo))
+                .andExpect(status().isNotFound());
     }
 }

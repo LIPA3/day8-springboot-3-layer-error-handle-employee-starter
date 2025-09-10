@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.empty;
 
 public class Company {
     private Integer id;

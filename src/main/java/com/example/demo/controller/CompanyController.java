@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.Company;
+import com.example.demo.empty.Company;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

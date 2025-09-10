@@ -1,5 +1,6 @@
 package com.example.demo.advice;
 
+import com.example.demo.Exception.IllegalEmployeeException;
 import com.example.demo.Exception.InvalidAgeException;
 import com.example.demo.Exception.InvalidSalaryException;
 import org.springframework.http.HttpStatus;
@@ -10,10 +11,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ResponseStatusException.class)
+    @ExceptionHandler(IllegalEmployeeException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseStatusException handleResponseStatusException(ResponseStatusException e) {
-        return new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+    public ResponseException handleResponseStatusException(IllegalEmployeeException e) {
+        return new ResponseException( e.getMessage());
     }
     @ExceptionHandler(InvalidAgeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
