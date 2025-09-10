@@ -22,7 +22,7 @@ public class EmployeeServiceTest {
     @Mock
     private EmployeeRepository employeeRepository;
     @Test
-    void should_throw_exception_when_create_employee_of_greater_than_45_or_less_than_18() {
+    void should_return_employee_when_create_employee_of_greater_than_45_or_less_than_18() {
         Employee employee = new Employee("John Doe", 22, "MALE", 50000.0);
         when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
@@ -43,4 +43,13 @@ public class EmployeeServiceTest {
             employeeService.createEmployee(employee);
         });
     }
+
+    @Test
+    void should_return_status_true_when_create_employee(){
+        Employee employee = new Employee("John Doe",20,"MALE", 50000.0, true);
+        when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
+        Employee employeeResult = employeeService.createEmployee(employee);
+        assertEquals(employee.getStatus(), employeeResult.getStatus());
+    }
+
 }

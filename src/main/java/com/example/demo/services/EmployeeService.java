@@ -38,6 +38,7 @@ public class EmployeeService {
         if(employee.getAge()>30 && employee.getSalary()<200000){
             throw new IllegalEmployeeException("Employee older than 30 cannot have salary less than 200000");
         }
+
         return employeeRepository.createEmployee(employee);
     }
 
@@ -51,6 +52,7 @@ public class EmployeeService {
         if (employeeById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
+
         employeeRepository.deleteEmployee(employeeById);
     }
 
