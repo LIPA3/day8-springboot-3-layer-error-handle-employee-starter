@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.Employee;
+import com.example.demo.Exception.IllegalEmployeeException;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,15 @@ public class EmployeeService {
         return employee;
     }
     public Employee createEmployee(Employee employee) {
+        if(employee.getAge() == null){
+            throw new IllegalEmployeeException("Employee age cannot be null");
+        }
+        if (employee.getAge() < 18 || employee.getAge() > 45) {
+            throw new IllegalEmployeeException("Employee age must be between 18 and 45");
+        }
+        if(employee.getAge()>30 && employee.getSalary()<200000){
+            throw new IllegalEmployeeException("Employee older than 30 cannot have salary less than 200000");
+        }
         return employeeRepository.createEmployee(employee);
     }
 
