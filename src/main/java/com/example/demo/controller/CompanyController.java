@@ -52,11 +52,11 @@ public class CompanyController {
     }
 
 
-//    @DeleteMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void deleteCompany(@PathVariable int id) {
-//        companyService.deleteCompany(id);
-//    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCompany(@PathVariable int id) {
+        companyService.deleteCompany(id);
+    }
 
 //    @DeleteMapping("/all")
 //    public void deleteAllCompanies() {

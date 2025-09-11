@@ -107,15 +107,15 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.name").value("Spring2"));
     }
 
-//    @Test
-//    void should_return_no_content_when_delete_id_found() throws Exception {
-//        createCompany1();
-//        MockHttpServletRequestBuilder request = delete("/companies/" + 1)
-//                .contentType(MediaType.APPLICATION_JSON);
-//
-//        mockMvc.perform(request)
-//                .andExpect(status().isNoContent());
-//    }
+    @Test
+    void should_return_no_content_when_delete_id_found() throws Exception {
+        createCompany1();
+        MockHttpServletRequestBuilder request = delete("/companies/" + 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent());
+    }
 
     @Test
     void should_return_truncated_companies_when_page_size_is_limit() throws Exception {

@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -59,17 +58,15 @@ public class CompanyService {
         return company.get();
     }
 
-//    public void deleteCompany(int id) {
-//        Company company = getCompanyById(id);
-//        if (company == null){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
-//        }
-//        companyRepository.deleteCompany(id);
-//    }
+    public void deleteCompany(int id) {
+        Optional<Company> company = companyRepository.findById(id);
+        if (company.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
+        }
+        companyRepository.deleteById(id);
+    }
 
 //    public void deleteAllCompanies() {
 //        companyRepository.deleteAllCompanies();
 //    }
-
-
 }
