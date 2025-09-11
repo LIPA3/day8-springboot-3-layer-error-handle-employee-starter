@@ -20,17 +20,14 @@ import java.util.Optional;
 public class CompanyService {
 
     private final ICompanyRepository companyRepository;
-    private final EmployeeMapper employeeMapper;
     private final CompanyMapper companyMapper;
 
-    public CompanyService(ICompanyRepository companyRepository, EmployeeMapper employeeMapper, CompanyMapper companyMapper) {
+    public CompanyService(ICompanyRepository companyRepository,  CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
-        this.employeeMapper = employeeMapper;
         this.companyMapper = companyMapper;
     }
 
     public List<Company> getCompanies(Integer page, Integer size) {
-//        Pageable pageable = PageRequest.of(page - 1, size);
         if(page == null && size == null) {
             return companyRepository.findAll();
         }else {
