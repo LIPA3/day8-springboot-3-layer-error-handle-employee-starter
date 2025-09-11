@@ -1,5 +1,8 @@
 package com.example.demo.services;
 
+import com.example.demo.dto.CompanyResponse;
+import com.example.demo.dto.mapper.CompanyMapper;
+import com.example.demo.dto.mapper.EmployeeMapper;
 import com.example.demo.empty.Company;
 import com.example.demo.repository.CompanyRepository;
 import com.example.demo.repository.ICompanyRepository;
@@ -17,9 +20,11 @@ import java.util.Optional;
 public class CompanyService {
 
     private final ICompanyRepository companyRepository;
+    private final EmployeeMapper employeeMapper;
 
-    public CompanyService(ICompanyRepository companyRepository) {
+    public CompanyService(ICompanyRepository companyRepository, EmployeeMapper employeeMapper) {
         this.companyRepository = companyRepository;
+        this.employeeMapper = employeeMapper;
     }
 
     public List<Company> getCompanies(Integer page, Integer size) {
@@ -32,8 +37,8 @@ public class CompanyService {
         }
     }
 
-    public Company createCompany(Company company) {
-        return companyRepository.save(company);
+    public CompanyResponse createCompany(Company company) {
+        return CompanyMapper.toResponse(companyRepository.save(company));
     }
 
     public Company updateCompany(int id, Company updatedCompany) {

@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CompanyRequest;
+import com.example.demo.dto.CompanyResponse;
+import com.example.demo.dto.mapper.CompanyMapper;
 import com.example.demo.empty.Company;
+import com.example.demo.empty.Employee;
 import com.example.demo.services.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +19,10 @@ public class CompanyController {
 //    private final List<Company> companies = new ArrayList<>();
 
     private final CompanyService companyService;
-
-    public CompanyController(CompanyService companyService) {
+    private final CompanyMapper companyMapper;
+    public CompanyController(CompanyService companyService, CompanyMapper companyMapper) {
         this.companyService = companyService;
+        this.companyMapper = companyMapper;
     }
 
     @GetMapping
@@ -27,7 +32,8 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company createCompany(@RequestBody Company company) {
+    public CompanyResponse createCompany(@RequestBody CompanyRequest companyRequest) {
+        Company company = companyMapper.toEntity(companyRequest);
         return companyService.createCompany(company);
     }
 
