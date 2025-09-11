@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.EmployeeReponse;
+import com.example.demo.dto.EmployeeRequest;
 import com.example.demo.dto.mapper.EmployeeMapper;
 import com.example.demo.empty.Employee;
 import com.example.demo.services.EmployeeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,28 +24,26 @@ public class EmployeeController {
 
     @GetMapping
     public List<EmployeeReponse> getEmployees(@RequestParam(required = false) String gender, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
-        List<Employee> employees = employeeService.getEmployees(gender, page, size);
-        return employeeMapper.toResponse(employees);
+        return employeeService.getEmployees(gender, page, size);
     }
 
     @GetMapping("/{id}")
     public EmployeeReponse getEmployeeById(@PathVariable int id) {
-        Employee employeeById = employeeService.getEmployeeById(id);
-        return employeeMapper.toResponse(employeeById);
+        return employeeService.getEmployeeById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeReponse createEmployee(@RequestBody Employee employee) {
-        Employee employees = employeeService.createEmployee(employee);
-        return employeeMapper.toResponse(employees);
+    public EmployeeReponse createEmployee(@RequestBody @Validated EmployeeRequest employeeRequest) {
+        Employee employee = employeeMapper.toEntity(employeeRequest);
+        return employeeService.createEmployee(employee);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeReponse updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
-        Employee employee = employeeService.updateEmployee(id, updatedEmployee);
-        return employeeMapper.toResponse(employee);
+    public EmployeeReponse updateEmployee(@PathVariable int id, @RequestBody @Validated EmployeeRequest updatedEmployee) {
+        Employee employee = employeeMapper.toEntity(updatedEmployee);
+        return employeeService.updateEmployee(id, employee);
     }
 
     @DeleteMapping("/{id}")
