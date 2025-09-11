@@ -21,10 +21,12 @@ public class CompanyService {
 
     private final ICompanyRepository companyRepository;
     private final EmployeeMapper employeeMapper;
+    private final CompanyMapper companyMapper;
 
-    public CompanyService(ICompanyRepository companyRepository, EmployeeMapper employeeMapper) {
+    public CompanyService(ICompanyRepository companyRepository, EmployeeMapper employeeMapper, CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
         this.employeeMapper = employeeMapper;
+        this.companyMapper = companyMapper;
     }
 
     public List<Company> getCompanies(Integer page, Integer size) {
@@ -41,14 +43,15 @@ public class CompanyService {
         return CompanyMapper.toResponse(companyRepository.save(company));
     }
 
-    public Company updateCompany(int id, Company updatedCompany) {
-        Optional<Company> company = companyRepository.findById(id);
-        if (company.isEmpty()){
+    public CompanyResponse updateCompany(int id, Company updatedCompany) {
+        Optional<Company> companyOptional = companyRepository.findById(id);
+        if (companyOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
         }
-
-        updatedCompany.setId(id);
-        return companyRepository.save(updatedCompany);
+        Company company = companyOptional.get();
+        company.setName(updatedCompany.getName());
+        company.setEmployees(updatedCompany.getEmployees());
+        return companyMapper.toResponse(companyRepository.save(company));
     }
 
     public Company getCompanyById(int id) {
@@ -66,7 +69,7 @@ public class CompanyService {
 //        }
 //        companyRepository.deleteCompany(id);
 //    }
-//
+
 //    public void deleteAllCompanies() {
 //        companyRepository.deleteAllCompanies();
 //    }

@@ -7,6 +7,7 @@ import com.example.demo.empty.Company;
 import com.example.demo.empty.Employee;
 import com.example.demo.services.CompanyService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,7 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-//    private final List<Company> companies = new ArrayList<>();
 
     private final CompanyService companyService;
     private final CompanyMapper companyMapper;
@@ -39,8 +39,9 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Company updateCompany(@PathVariable int id, @RequestBody Company updatedCompany) {
-        return companyService.updateCompany(id, updatedCompany);
+    public CompanyResponse updateCompany(@PathVariable int id, @RequestBody @Validated CompanyRequest updatedCompany) {
+        Company company = companyMapper.toEntity(updatedCompany);
+        return companyService.updateCompany(id, company);
     }
 
 
@@ -56,7 +57,7 @@ public class CompanyController {
 //    public void deleteCompany(@PathVariable int id) {
 //        companyService.deleteCompany(id);
 //    }
-//
+
 //    @DeleteMapping("/all")
 //    public void deleteAllCompanies() {
 //        companyService.deleteAllCompanies();
