@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public class CompanyRepository {
-//TODO:refactor if
+
     private final List<Company> companies = new ArrayList<>();
 
     public List<Company> getCompanies(Integer page, Integer size) {

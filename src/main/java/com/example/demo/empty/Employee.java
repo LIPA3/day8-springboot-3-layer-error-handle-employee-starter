@@ -1,7 +1,6 @@
 package com.example.demo.empty;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Repository;
 
 @Entity
 @Table
@@ -27,6 +26,11 @@ public class Employee {
         return gender;
     }
 
+    @Column(name = "companyId")
+    private Integer companyId;
+    public Integer getCompanyId() {
+        return companyId;
+    }
     public Boolean getActive() {
         return active;
     }

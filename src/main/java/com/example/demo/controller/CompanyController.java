@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private final List<Company> companies = new ArrayList<>();
+//    private final List<Company> companies = new ArrayList<>();
 
     private final CompanyService companyService;
 
@@ -45,14 +45,14 @@ public class CompanyController {
     }
 
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCompany(@PathVariable int id) {
-        companyService.deleteCompany(id);
-    }
-
-    @DeleteMapping("/all")
-    public void deleteAllCompanies() {
-        companyService.deleteAllCompanies();
-    }
+//    @DeleteMapping("/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deleteCompany(@PathVariable int id) {
+//        companyService.deleteCompany(id);
+//    }
+//
+//    @DeleteMapping("/all")
+//    public void deleteAllCompanies() {
+//        companyService.deleteAllCompanies();
+//    }
 }
