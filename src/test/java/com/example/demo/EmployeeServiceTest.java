@@ -4,12 +4,15 @@ import com.example.demo.Exception.IllegalEmployeeException;
 import com.example.demo.Exception.InvalidAgeException;
 import com.example.demo.empty.Employee;
 import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.repository.IEmployeeRepository;
 import com.example.demo.services.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,12 +26,12 @@ public class EmployeeServiceTest {
     private EmployeeService employeeService;
 
     @Mock
-    private EmployeeRepository employeeRepository;
+    private IEmployeeRepository employeeRepository;
 
     @Test
     void should_return_employee_when_create_employee_of_greater_than_45_or_less_than_18() {
         Employee employee = new Employee("John Doe", 22, "MALE", 50000.0);
-        when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
+        when(employeeRepository.save(any())).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
         assertEquals(employee.getAge(), employeeResult.getAge());
     }
@@ -52,7 +55,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_status_true_when_create_employee() {
         Employee employee = new Employee("John Doe", 20, "MALE", 50000.0, true);
-        when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
+        when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
         assertEquals(employee.getActive(), employeeResult.getActive());
     }
@@ -61,9 +64,9 @@ public class EmployeeServiceTest {
     void should_return_status_false_when_delete_employee() {
         Employee employee = new Employee("John Doe", 20, "MALE", 50000.0, true);
         employee.setId(1);
-        when(employeeRepository.getEmployeeById(1)).thenReturn(employee);
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(employee));
         employeeService.deleteEmployee(1);
-        verify(employeeRepository).updateEmployee(eq(1),argThat(e->e.getActive() == false));
+        verify(employeeRepository).save(argThat(e->e.getActive() == false));
     }
 
     @Test
@@ -71,7 +74,7 @@ public class EmployeeServiceTest {
         Employee employee = new Employee("John Doe", 20, "MALE", 50000.0, true);
         employee.setId(1);
 
-        when(employeeRepository.getEmployeeById(1)).thenReturn(employee);
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(employee));
 
         employeeService.deleteEmployee(1);
 
