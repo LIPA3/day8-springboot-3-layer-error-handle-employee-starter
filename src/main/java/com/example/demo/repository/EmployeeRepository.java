@@ -60,7 +60,4 @@ public class EmployeeRepository {
     public void deleteEmployee(Employee employee) {
         employees.remove(employee);
     }
-    public void empty() {
-        employees.clear();
-    }
 }

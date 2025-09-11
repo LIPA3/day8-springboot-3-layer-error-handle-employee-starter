@@ -21,14 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CompanyControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private CompanyController companyController;
-
-    @BeforeEach
-    void cleanCompanies() throws Exception {
-       mockMvc.perform(delete("/companies/all"));
-    }
+//TODO
 
     private void createCompany1() throws Exception {
         Gson gson = new Gson();
@@ -75,43 +68,38 @@ public class CompanyControllerTest {
 
     @Test
     void should_return_company_when_get_id_found() throws Exception {
-        Company spring = new Company(null, "Spring");
-        Company company = companyController.createCompany(spring);
+       createCompany1();
 
-        MockHttpServletRequestBuilder request = get("/companies/" + company.getId())
+        MockHttpServletRequestBuilder request = get("/companies/" + 1)
                 .contentType(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(company.getId()))
-                .andExpect(jsonPath("$.name").value(company.getName()));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Spring"));
     }
 
     @Test
     void should_return_company_when_put_with_id_found() throws Exception {
-        Company spring = new Company(null, "Spring");
-        spring.setName("Spring");
-        Company company = companyController.createCompany(spring);
+        createCompany1();
         String requestBody = """
                 {
                     "name": "Spring2"
                 }
                 """;
-        MockHttpServletRequestBuilder request = put("/companies/" + company.getId())
+        MockHttpServletRequestBuilder request = put("/companies/" + 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(company.getId()))
+                .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Spring2"));
     }
 
     @Test
     void should_return_no_content_when_delete_id_found() throws Exception {
-        Company spring = new Company(null, "Spring");
-        Company company = companyController.createCompany(spring);
-
-        MockHttpServletRequestBuilder request = delete("/companies/" + company.getId())
+        createCompany1();
+        MockHttpServletRequestBuilder request = delete("/companies/" + 1)
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)

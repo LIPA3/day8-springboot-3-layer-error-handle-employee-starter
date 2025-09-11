@@ -1,6 +1,13 @@
 package com.example.demo.empty;
 
+import jakarta.persistence.*;
+import org.springframework.stereotype.Repository;
+
+@Entity
+@Table
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer age;

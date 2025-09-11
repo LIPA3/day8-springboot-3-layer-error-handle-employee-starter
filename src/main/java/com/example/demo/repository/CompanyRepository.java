@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public class CompanyRepository {
-
+//TODO:refactor if
     private final List<Company> companies = new ArrayList<>();
 
     public List<Company> getCompanies(Integer page, Integer size) {
@@ -30,7 +30,6 @@ public class CompanyRepository {
     }
 
     public Company updateCompany(int id, Company updatedCompany) {
-        Company found = null;
         for (Company c : companies) {
             if (c.getId().equals(id)) {
                 c.setName(updatedCompany.getName());
